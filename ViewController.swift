@@ -42,7 +42,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 sleep(2)
             }
             
-            currentLocation = locManager.location
+            currentLocation = locManager.requestLocation()
         
         //let location =  locationManager(locManager, didUpdateLocations: [locManager.location!]) // https://stackoverflow.com/a/26742973
         let window = 1440 //1440 sec = 24 min, window is the length of one "best" or "better" or "good" period
