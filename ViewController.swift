@@ -5,6 +5,7 @@
 //  Created by Dhanvi Ganti on 11/23/19.
 //  Copyright © 2019 Dhanvi Ganti. All rights reserved.
 
+// https://github.com/ceeK/Solar/blob/master/README.md
 /*
  Thank you so much for taking the time to look at my code! It really helps a lot!
  
@@ -28,47 +29,46 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
-        let locManager = CLLocationManager()
-        locManager.requestWhenInUseAuthorization()
-        var currentLocation: CLLocation!
-
-        if(CLLocationManager.authorizationStatus() == .authorizedWhenInUse){
             
             //the sleep function is because I read online that Swift takes a few seconds to actually get the location data, so I'd hoped this would give it the time, but it hasn't worked.
-            locManager.startUpdatingLocation()
+          //  locManager.startUpdatingLocation()
             
-            do {
+         /*   do {
                 sleep(2)
             }
+ */
             
-            currentLocation = locManager.requestLocation()
+        //    currentLocation = locManager.requestLocation()
         
-        //let location =  locationManager(locManager, didUpdateLocations: [locManager.location!]) // https://stackoverflow.com/a/26742973
+//        let location =  locationManager(locManager, didUpdateLocations: [locManager.location!]) // https://stackoverflow.com/a/26742973
         let window = 1440 //1440 sec = 24 min, window is the length of one "best" or "better" or "good" period
         let eightHrs = 28800 //will only use in some locations due to incompatible type errors
         
-        let latitude = currentLocation.coordinate.latitude
-        let longitude = currentLocation.coordinate.longitude
+        let lat: CLLocationDegrees = 121.8863
+        let long: CLLocationDegrees = 37.3382
         /*
         let location = CLLocationCoordinate2D.init(latitude: latitude, longitude: longitude)
         */
-        let location2D: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+        let location2D: CLLocationCoordinate2D = CLLocationCoordinate2DMake(lat, long)
 
 
-        var date = Date()
+        var currentDate = Date()
+        
         let secondsFromUTC = Double(TimeZone.current.secondsFromGMT()) //GMT and UTC are the same time
         let tz = TimeZone.current
-        if tz.isDaylightSavingTime(for: date) {
-            date = Date() - secondsFromUTC //subtracting distance from UTC  (in seconds), since we want in correct time zone
+        if tz.isDaylightSavingTime(for: currentDate) {
+            currentDate = Date() - secondsFromUTC //subtracting distance from UTC  (in seconds), since we want in correct time zone
         }
         else {
-            date = Date() - secondsFromUTC - 3600 //subtracting distance and and 1 more hr from UTC
+            currentDate = Date() - secondsFromUTC - 3600 //subtracting distance and and 1 more hr from UTC
         }
-
-        
-        
-          let solar = (Solar(for: date, coordinate: location2D))! //Solar class is another class I'm using, pulled from online. This is the equation used to calculate the sunrise and sunset.
+      //  print(currentDate)
+       // print(type(of: lat))
+      //  print(type(of: currentDate))
+      //  print(type(of: location2D))
+        print(currentDate)
+        print(location2D)
+        let solar = (Solar(for: currentDate,  coordinate: location2D))! //Solar class is another class I'm using, pulled from online. This is the equation used to calculate the sunrise and sunset.
 
           let sunrise = solar.sunrise! - secondsFromUTC + 480 //technically just secondsFromUTC, since we are converting UTC to local timezone, but this algorithm is off by ~8 mins, so secondsFromUTC + 480 (calculated in seconds)
 
@@ -154,7 +154,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         eGood.text = eGoodString
         eGood.textColor = UIColor.darkGray
         }
-    }
 
     @IBOutlet weak var sRise: UILabel!
     @IBOutlet weak var sSet: UILabel!
