@@ -16,8 +16,6 @@
                 The 2nd cycle begins 12 windows after sunrise, so 12 * 24 mins = 4 hrs 48 mins, and lasts until 18 * 24 mins after sunrise, so 7 hrs 12 mins after sunrise.
                 The 3rd cycle begins at sunset, and ends 72 mins later.
             
- 
-            The problem with the code right now is on line 42, when I declare the currentLocation variable, it is stored as nil. This problem progresses to line 48, where I try to get the latitude from currentLocation, which doesn't work as it is nil. Could you please help me with this?
  */
 //
 
